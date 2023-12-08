@@ -1,0 +1,29 @@
+{
+  "name": "@ostro/pagination",
+  "version": "1.0.0",
+  "description": "Pagination module for OstroJS"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@ostro/support": "^1.0.11"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "engineStrict": true,
+  "keywords": [
+    "pagination",
+    "paginator"
+  ],
+  "author": "amar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ostrojs/pagination.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ostrojs/pagination/issues"
+  },
+  "homepage": "https://github.com/ostrojs/pagination#readme"
+}

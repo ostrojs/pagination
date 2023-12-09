@@ -20,7 +20,7 @@ class LengthAwarePaginator extends AbstractPaginator {
 		this.$perPage = parseInt($perPage);
 		this.$lastPage = Math.max(parseInt(Math.ceil($total / $perPage)), 1);
 		this.$path = this.$path !== '/' ? rtrim(this.$path, '/') : this.$path;
-		this.$currentPage = this.setCurrentPage($currentPage, this.pageName);
+		this.$currentPage = this.setCurrentPage($currentPage, this.$pageName);
 		this.$items = $items instanceof Collection ? $items : Collection.make($items);
 	}
 

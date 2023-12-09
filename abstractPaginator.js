@@ -1,7 +1,8 @@
 const querystring = require('querystring');
 const { range, is_null } = require('@ostro/support/function');
-const Collection = require('@ostro/support/collection')
-class AbstractPaginator {
+const Collection = require('@ostro/support/collection');
+const { Macroable } = require('@ostro/support/macro');
+class AbstractPaginator extends Macroable {
 
 	$items;
 
@@ -99,7 +100,7 @@ class AbstractPaginator {
 
 	withQueryString() {
 		if (isset(this.constructor.$queryStringResolver)) {
-			return this.appends(this.constructor.$queryStringResolver());
+			return this.appends(this.constructor.queryStringResolver());
 		}
 
 		return this;
@@ -137,7 +138,6 @@ class AbstractPaginator {
 		return count(this.$items) > 0 ? (this.$currentPage - 1) * this.$perPage + 1 : null;
 	}
 
-
 	lastItem() {
 		return count(this.$items) > 0 ? this.firstItem() + this.count() - 1 : null;
 	}
@@ -153,11 +153,11 @@ class AbstractPaginator {
 	}
 
 	hasPages() {
-		return this.$currentPage() != 1 || this.hasMorePages();
+		return this.currentPage() != 1 || this.hasMorePages();
 	}
 
 	onFirstPage() {
-		return this.$currentPage() <= 1;
+		return this.currentPage() <= 1;
 	}
 
 	onLastPage() {
@@ -284,7 +284,7 @@ class AbstractPaginator {
 	}
 
 	getOptions() {
-		return this.options;
+		return this.$options;
 	}
 
 	offsetExists($key) {
@@ -308,7 +308,7 @@ class AbstractPaginator {
 	}
 
 	__call($target, $method, $parameters) {
-		return $target.getCollection()[$method]($parameters);
+		return $target.getCollection()[$method](...$parameters);
 	}
 
 	__toString() {

@@ -1,6 +1,7 @@
 const AbstractPaginator = require('./abstractPaginator');
 const Collection = require('@ostro/support/collection')
-const UrlWindow = require('./urlWindow')
+const UrlWindow = require('./urlWindow');
+const { is_object } = require('@ostro/support/function');
 class LengthAwarePaginator extends AbstractPaginator {
 
 	$total;
@@ -46,15 +47,16 @@ class LengthAwarePaginator extends AbstractPaginator {
 			if (typeof ($item) != 'object') {
 				return [{ 'url': null, 'label': '...', 'active': false }];
 			}
-
-			return new Collection($item).map(($url, $page) => {
+			let pages = [];
+			for(let $page in $item){
 				$page = parseInt($page);
-				return {
-					'url': $url,
+				pages.push({
+					'url': $item[$page],
 					'label': String($page),
 					'active': this.currentPage() === $page,
-				};
-			});
+				});
+			}
+			return pages;
 		}).prepend({
 			'url': this.previousPageUrl(),
 			'label': 'Previous',
@@ -69,11 +71,11 @@ class LengthAwarePaginator extends AbstractPaginator {
 	elements() {
 		const window = UrlWindow.make(this);
 
-		return Object.values({
-			first: window.first,
-			slider: Array.isArray(window.slider) ? '...' : null,
-			last: window.last,
-		}).filter(element => element !== null);
+		return [
+			window.first,
+			window.slider && is_object(window.slider) ? '...' : null,
+			window.last,
+		].filter(element => element !== null);
 	}
 
 	total() {

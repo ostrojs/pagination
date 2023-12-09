@@ -1,5 +1,5 @@
 const querystring = require('querystring');
-const { range, is_null } = require('@ostro/support/function');
+const { range, is_null, is_object } = require('@ostro/support/function');
 const Collection = require('@ostro/support/collection');
 const { Macroable } = require('@ostro/support/macro');
 class AbstractPaginator extends Macroable {
@@ -82,16 +82,15 @@ class AbstractPaginator extends Macroable {
 			return this;
 		}
 
-		if (Array.isArray($key)) {
-			return this.appendArray($key);
+		if (is_object($key)) {
+			return this.appendObject($key);
 		}
 
 		return this.addQuery($key, $value);
 	}
 
-	appendArray($keys = {}) {
+	appendObject($keys = {}) {
 		for (const key in $keys) {
-
 			this.addQuery(key, $keys[key]);
 		}
 
@@ -99,11 +98,7 @@ class AbstractPaginator extends Macroable {
 	}
 
 	withQueryString() {
-		if (isset(this.constructor.$queryStringResolver)) {
-			return this.appends(this.constructor.queryStringResolver());
-		}
-
-		return this;
+		return this.appends(this.resolveQueryString());
 	}
 
 	addQuery($key, $value) {

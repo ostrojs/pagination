@@ -41,6 +41,11 @@ class Paginator extends AbstractPaginator {
 		}
 	}
 
+	nextPage() {
+		if (this.hasMorePages()) {
+			return this.currentPage() + 1;
+		}
+	}
 
 	links($view = null, $data = []) {
 		return this.render($view, $data);

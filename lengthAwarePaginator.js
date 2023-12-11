@@ -48,7 +48,7 @@ class LengthAwarePaginator extends AbstractPaginator {
 				return [{ 'url': null, 'label': '...', 'active': false }];
 			}
 			let pages = [];
-			for(let $page in $item){
+			for (let $page in $item) {
 				$page = parseInt($page);
 				pages.push({
 					'url': $item[$page],
@@ -89,6 +89,12 @@ class LengthAwarePaginator extends AbstractPaginator {
 	nextPageUrl() {
 		if (this.hasMorePages()) {
 			return this.url(this.currentPage() + 1);
+		}
+	}
+
+	nextPage() {
+		if (this.hasMorePages()) {
+			return this.currentPage() + 1;
 		}
 	}
 

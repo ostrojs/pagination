@@ -102,10 +102,14 @@ class LengthAwarePaginator extends AbstractPaginator {
 		return this.$lastPage;
 	}
 
+	toJSON() {
+		return this.toJson();
+	}
+
 	toJson() {
 		return {
 			'current_page': this.currentPage(),
-			'data': this.$items.toArray(),
+			'data': this.items(),
 			'first_page_url': this.url(1),
 			'from': this.firstItem(),
 			'last_page': this.lastPage(),

@@ -1,29 +1,52 @@
 {
-  "name": "@ostro/pagination",
-  "version": "1.0.7",
-  "description": "Pagination module for OstroJS",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@ostro/support": "^1.0.12"
-  },
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "engineStrict": true,
-  "keywords": [
-    "pagination",
-    "paginator"
-  ],
-  "author": "amar",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ostrojs/pagination.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ostrojs/pagination/issues"
-  },
-  "homepage": "https://github.com/ostrojs/pagination#readme"
+    "name": "@ostro/pagination",
+    "version": "2.0.0-alpha.1",
+    "description": "Pagination module for OstroJS",
+    "main": "build/lengthAwarePaginator.js",
+    "types": "build/lengthAwarePaginator.d.ts",
+    "files": [
+        "build"
+    ],
+    "exports": {
+        ".": {
+            "types": "./build/lengthAwarePaginator.d.ts",
+            "default": "./build/lengthAwarePaginator.js"
+        },
+        "./*": {
+            "types": "./build/*.d.ts",
+            "default": "./build/*.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json && node scripts/build.js",
+        "prepublishOnly": "npm run build",
+        "test": "npx c8 npx jest",
+        "clean": "rm -rf build coverage"
+    },
+    "dependencies": {
+        "@ostro/contracts": "^2.0.0-alpha.1",
+        "@ostro/support": "^2.0.0-alpha.1"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "engineStrict": true,
+    "keywords": [
+        "pagination",
+        "paginator"
+    ],
+    "author": "amar",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ostrojs/pagination.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ostrojs/pagination/issues"
+    },
+    "homepage": "https://github.com/ostrojs/pagination#readme",
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.8.0"
+    }
 }

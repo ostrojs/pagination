@@ -1,4 +1,3 @@
-import '@ostro/support/helpers';
 import AbstractPaginator from '../src/abstractPaginator';
 import LengthAwarePaginator from '../src/lengthAwarePaginator';
 import Paginator from '../src/paginator';

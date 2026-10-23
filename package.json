@@ -1,20 +1,17 @@
 {
     "name": "@ostro/pagination",
-    "version": "2.0.0-alpha.4",
+    "version": "2.0.0-alpha.5",
     "description": "Pagination module for OstroJS",
-    "main": "build/lengthAwarePaginator.js",
-    "types": "./build/types/lengthAwarePaginator.d.ts",
-    "files": [
-        "build"
-    ],
+    "main": "lengthAwarePaginator.js",
+    "types": "types/lengthAwarePaginator.d.ts",
     "exports": {
         ".": {
-            "types": "./build/types/lengthAwarePaginator.d.ts",
-            "default": "./build/lengthAwarePaginator.js"
+            "types": "./types/lengthAwarePaginator.d.ts",
+            "default": "./lengthAwarePaginator.js"
         },
         "./*": {
-            "types": "./build/types/*.d.ts",
-            "default": "./build/*.js"
+            "types": "./types/*.d.ts",
+            "default": "./*.js"
         }
     },
     "scripts": {
@@ -25,8 +22,8 @@
         "lint:check": "tsc --noEmit -p tsconfig.build.json"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.5",
-        "@ostro/support": "^2.0.0-alpha.6"
+        "@ostro/contracts": "^2.0.0-alpha.6",
+        "@ostro/support": "^2.0.0-alpha.7"
     },
     "engines": {
         "node": ">=18.0.0"
@@ -54,7 +51,7 @@
         "jest": "^30.5.2",
         "ts-jest": "^29.4.15",
         "ts-node": "^10.9.2",
-        "@ostro/builder": "^2.0.0-alpha.3"
+        "@ostro/builder": "^2.0.0-alpha.4"
     },
     "overrides": {
         "sprintf-js": "^1.1.3",

@@ -33,9 +33,7 @@ class Paginator<T = unknown> extends AbstractPaginator<T> {
 		super();
 		this.$options = $options;
 		this.$request = $request;
-		for (const $key in $options) {
-			(this as any)[$key] = $options[$key];
-		}
+		Object.assign(this, $options);
 
 		this.$perPage = $perPage;
 		this.$currentPage = this.setCurrentPage($currentPage);

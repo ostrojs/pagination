@@ -54,6 +54,11 @@ describe('@ostro/pagination', () => {
             expect(p1.previousPageUrl()).toBeUndefined();
         });
 
+        test('default hasMorePages and render', () => {
+            expect(AbstractPaginator.prototype.hasMorePages.call({})).toBe(false);
+            expect(AbstractPaginator.prototype.render.call({})).toBe('');
+        });
+
         test('getUrlRange', () => {
             const p = new TestPaginator([], 10, 1);
             const range = p.getUrlRange(1, 3);
@@ -274,6 +279,11 @@ describe('@ostro/pagination', () => {
             expect(p.offsetGet(2)).toBe('z');
             p.offsetUnset(2);
             expect(p.offsetExists(2)).toBe(false);
+
+            // offsetExists with no has method
+            const pNoHas = new TestPaginator();
+            pNoHas.$items = {} as any;
+            expect(pNoHas.offsetExists('test')).toBe(false);
 
             // offsetUnset with non-array items
             const pObj = new TestPaginator();

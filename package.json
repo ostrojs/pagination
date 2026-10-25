@@ -1,29 +1,29 @@
 {
     "name": "@ostro/pagination",
-    "version": "2.0.0-alpha.8",
+    "version": "2.0.0-alpha.3",
     "description": "Pagination module for OstroJS",
     "main": "lengthAwarePaginator.js",
-    "types": ".types/lengthAwarePaginator.d.ts",
+    "types": ".typed/lengthAwarePaginator.d.ts",
     "exports": {
         ".": {
-            "types": "./.types/lengthAwarePaginator.d.ts",
+            "types": "./.typed/lengthAwarePaginator.d.ts",
             "default": "./lengthAwarePaginator.js"
         },
         "./*": {
-            "types": "./.types/*.d.ts",
+            "types": "./.typed/*.d.ts",
             "default": "./*.js"
         }
     },
     "scripts": {
-        "build": "npm run lint:check && tsc -p tsconfig.build.json && node scripts/build.js",
+        "build": "npm run lint:check && rm -rf build && ostro-build --prepare",
         "prepublishOnly": "npm run build",
-        "test": "npx c8 npx jest",
+        "test": "jest",
         "clean": "rm -rf build coverage",
-        "lint:check": "tsc --noEmit -p tsconfig.build.json"
+        "lint:check": "tsc --noEmit"
     },
     "dependencies": {
-        "@ostro/contracts": "^2.0.0-alpha.9",
-        "@ostro/support": "^2.0.0-alpha.10"
+        "@ostro/contracts": "^2.0.0-alpha.3",
+        "@ostro/support": "^2.0.0-alpha.3"
     },
     "engines": {
         "node": ">=18.0.0"
@@ -44,7 +44,7 @@
     },
     "homepage": "https://github.com/ostrojs/pagination#readme",
     "devDependencies": {
-        "@ostro/builder": "^2.0.0-alpha.7",
+        "@ostro/builder": "^2.0.0-alpha.1",
         "@types/jest": "^30.0.0",
         "@types/node": "^22.0.0",
         "c8": "^10.1.3",

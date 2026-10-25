@@ -42,13 +42,11 @@ class LengthAwarePaginator<T = unknown> extends AbstractPaginator<T> implements 
 		this.$options = $options;
 		this.$request = $request;
 
-		for (const $key in $options) {
-			(this as any)[$key] = $options[$key];
-		}
+		Object.assign(this, $options);
 
 		this.$total = $total;
-		this.$perPage = parseInt($perPage as any, 10);
-		this.$lastPage = Math.max(parseInt(Math.ceil($total / $perPage) as any, 10), 1);
+		this.$perPage = parseInt(String($perPage), 10);
+		this.$lastPage = Math.max(Math.ceil($total / $perPage), 1);
 		this.$path = this.$path !== '/' ? rtrim(this.$path, '/') : this.$path;
 		this.$currentPage = this.setCurrentPage($currentPage, this.$pageName);
 		this.$items = $items instanceof Collection ? $items : Collection.make($items);

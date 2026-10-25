@@ -1,7 +1,8 @@
-import querystring from 'querystring';
+import querystring from 'node:querystring';
 import { count, is_null, is_object, range } from '@ostro/support/function';
 import Collection from '@ostro/support/collection';
 import { Macroable } from '@ostro/support/macro';
+import type { ICollection } from '@ostro/contracts/collection/collect';
 
 import type { IPaginator, ILengthAwarePaginator } from '@ostro/contracts/pagination/paginator';
 
@@ -247,7 +248,7 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @returns Fluent self instance.
 	 */
 	loadMorph($relation: any, $relations: any): this {
-		(this.getCollection() as any).loadMorph($relation, $relations);
+		(this.getCollection() as ICollection).loadMorph?.($relation, $relations);
 
 		return this;
 	}
@@ -260,7 +261,7 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @returns Fluent self instance.
 	 */
 	loadMorphCount($relation: any, $relations: any): this {
-		(this.getCollection() as any).loadMorphCount($relation, $relations);
+		(this.getCollection() as ICollection).loadMorphCount?.($relation, $relations);
 
 		return this;
 	}
@@ -557,9 +558,10 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @returns Iterator.
 	 */
 	getIterator(): Iterator<T> {
-		return typeof (this.$items as any).getIterator === 'function'
-			? (this.$items as any).getIterator()
-			: (this.$items as any)[Symbol.iterator]();
+        const items = this.$items as ICollection<T>;
+        return typeof items?.getIterator === 'function'
+            ? items.getIterator()!
+            : items[Symbol.iterator]!();
 	}
 
 	/**
@@ -626,7 +628,7 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @returns True if key exists.
 	 */
 	offsetExists($key: any): boolean {
-		return (this.$items as any).has($key);
+		return (this.$items as ICollection<T>).has?.($key) ?? false;
 	}
 
 	/**
@@ -636,8 +638,8 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @returns Item value.
 	 */
 	offsetGet($key: any): any {
-		const val = (this.$items as any).get($key);
-		return (val && typeof val.all === 'function') ? val.all() : val;
+		const val = (this.$items as ICollection<T>).get($key);
+		return (val && typeof (val as { all?: () => unknown }).all === 'function') ? (val as { all: () => unknown }).all() : val;
 	}
 
 	/**
@@ -647,7 +649,7 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @param value - Item value.
 	 */
 	offsetSet($key: any, $value: any): void {
-		(this.$items as any).put($key, $value);
+		(this.$items as ICollection<T>).put($key, $value);
 	}
 
 	/**
@@ -656,10 +658,11 @@ class AbstractPaginator<T = unknown> extends Macroable implements IPaginator<T> 
 	 * @param key - Item key.
 	 */
 	offsetUnset($key: any): void {
-		if (Array.isArray((this.$items as any).$items)) {
-			(this.$items as any).$items.splice($key, 1);
+		const col = this.$items;
+        if (Array.isArray(col?.$items)) {
+			col.$items.splice($key as number, 1);
 		} else {
-			delete (this.$items as any)[$key];
+			delete (this.$items as Record<string, any>)[$key];
 		}
 	}
 
